@@ -29,7 +29,7 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
   const opts = {...options}
   let lines = renderReport(results, opts)
   let report = lines.join('\n')
-
+  core.info(report)
   if (getByteLength(report) <= MAX_REPORT_LENGTH) {
     return report
   }
