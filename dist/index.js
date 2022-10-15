@@ -979,7 +979,8 @@ class JavaJunitParser {
         const suites = junit.testsuites.testsuite === undefined
             ? []
             : junit.testsuites.testsuite.map(ts => {
-                const name = ts.$.name.trim();
+                let name = ts.$.name.trim();
+                name = name.substr(name.lastIndexOf(".") + 1);
                 const time = parseFloat(ts.$.time) * 1000;
                 const sr = new test_results_1.TestSuiteResult(name, this.getGroups(ts), time);
                 return sr;
@@ -1475,11 +1476,13 @@ function getReport(results, options = defaultOptions) {
     const opts = Object.assign({}, options);
     let lines = renderReport(results, opts);
     let report = lines.join('\n');
+    core.info(report);
+    core.info(getByteLength(report).toString());
     if (getByteLength(report) <= MAX_REPORT_LENGTH) {
         return report;
     }
     if (opts.listTests === 'all') {
-        core.info("Test report summary is too big - setting 'listTests' to 'failed'");
+        core.info("Test setting 'listTests' to 'failed'");
         opts.listTests = 'failed';
         lines = renderReport(results, opts);
         report = lines.join('\n');

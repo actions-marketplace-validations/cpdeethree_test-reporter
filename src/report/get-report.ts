@@ -28,14 +28,14 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
   const opts = {...options}
   let lines = renderReport(results, opts)
   let report = lines.join('\n')
-  core.info("TEST TEST TEST")
-  //core.info(`Report: ${report} `)
+  core.info(report)
+  core.info(getByteLength(report).toString())
   if (getByteLength(report) <= MAX_REPORT_LENGTH) {
     return report
   }
 
   if (opts.listTests === 'all') {
-    core.info("Test report summary is too big - setting 'listTests' to 'failed'")
+    core.info("Test setting 'listTests' to 'failed'")
     opts.listTests = 'failed'
     lines = renderReport(results, opts)
     report = lines.join('\n')
