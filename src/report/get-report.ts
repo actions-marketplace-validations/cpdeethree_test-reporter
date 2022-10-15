@@ -25,11 +25,11 @@ export function getReport(results: TestRunResult[], options: ReportOptions = def
   core.info('Generating check run summary')
 
   applySort(results)
-
   const opts = {...options}
   let lines = renderReport(results, opts)
   let report = lines.join('\n')
-  core.info(`Report: ${report} `)
+  core.info("TEST TEST TEST")
+  //core.info(`Report: ${report} `)
   if (getByteLength(report) <= MAX_REPORT_LENGTH) {
     return report
   }

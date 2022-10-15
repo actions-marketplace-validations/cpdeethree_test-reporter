@@ -64,7 +64,8 @@ export class JavaJunitParser implements TestParser {
       junit.testsuites.testsuite === undefined
         ? []
         : junit.testsuites.testsuite.map(ts => {
-            const name = ts.$.name.trim()
+            let name = ts.$.name.trim()
+            name = name.substr(name.lastIndexOf(".") + 1)
             const time = parseFloat(ts.$.time) * 1000
             const sr = new TestSuiteResult(name, this.getGroups(ts), time)
             return sr
